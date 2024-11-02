@@ -1,12 +1,82 @@
+/* Estilo general para el body */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Arial', sans-serif; /* Cambia la fuente según tu preferencia */
+    color: rgb(0, 0, 0); /* Color del texto */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Asegura que el body tenga al menos el alto de la ventana */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: flex-start; /* Mantiene el contenido en la parte superior */
 }
 
-form {
-    margin-bottom: 20px;
+/* Estilo específico para el login */
+.login-background{
+    background-image: url('img/background_login.jpg'); /* Ruta a la imagen de fondo */
+    background-size: cover; /* La imagen cubre toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Asegura que ocupe todo el alto de la ventana */
+    width: 100vw; /* Asegura que ocupe todo el ancho de la ventana */
+    position: absolute; /* Permite que el fondo cubra todo el viewport */
+    top: 0; /* Posiciona el fondo en la parte superior */
+    left: 0; /* Posiciona el fondo a la izquierda */
+    z-index: -1; /* Asegura que esté detrás de otros elementos */
 }
 
-input {
-    margin-right: 10px;
+h1 {
+    margin-top: 20px; /* Espacio superior */
+    font-size: 2.5em; /* Tamaño de la fuente */
+    text-align: center; /* Centra el texto */
+    font-family: 'Verdana', sans-serif; /* Cambia a la fuente deseada */
+    color: #FFD700; /* Cambia el color del título (ejemplo: dorado) */
+}
+
+
+/* Estilo del contenedor del formulario */
+#login-form {
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente para el formulario */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px;
+    width: 300px; /* Ancho del formulario */
+    margin: auto; /* Centrar el formulario */
+    margin-top: 100px; /* Espacio superior */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Sombra del formulario */
+}
+
+/* Estilo de los inputs */
+input[type="text"],
+input[type="password"] {
+    width: 90%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px 0; /* Espaciado superior e inferior */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilo del botón */
+button {
+    background-color: #4CAF50; /* Color del botón */
+    color: white; /* Color del texto del botón */
+    padding: 10px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    width: 95%; /* Ancho completo */
+}
+
+/* Efecto al pasar el ratón sobre el botón */
+button:hover {
+    background-color: #45a049; /* Color más oscuro al pasar el ratón */
+}
+
+#register-button {
+    padding: 10px 20px; /* Espacio interno del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #28a745; /* Color de fondo del botón (verde) */
+    color: white; /* Color del texto del botón */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    margin-top: 30px; /* Espacio superior para separar del formulario */
 }

@@ -48,7 +48,7 @@ function cargarCampanas() {
         })
         .then(campanas => {
             const campaignList = document.getElementById('campaign-list');
-            campaignList.innerHTML = ''; // Limpiar la lista existente
+            campaignList.innerHTML = '';
 
             campanas.forEach(campana => {
                 const li = document.createElement('li');

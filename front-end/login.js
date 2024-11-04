@@ -1,26 +1,39 @@
-document.getElementById('login-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+async function handleLogin(event) {
+    event.preventDefault(); // Previene el envío del formulario por defecto
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    // Aquí deberías hacer una solicitud POST a tu API para autenticar al usuario
-    fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-    })
-    .then(response => {
+    try {
+        // Realiza la solicitud de inicio de sesión
+        const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
         if (response.ok) {
-            return response.json();
+            const data = await response.json();
+            alert("Inicio de sesión exitoso"); // Mensaje de éxito
+            console.log(data); // Muestra la respuesta del servidor en la consola
+
+            // Almacena un token o flag de autenticación
+            localStorage.setItem('authToken', data.token); // Si tu API devuelve un token
+
+            // Redirigir al dashboard
+            location.href = 'dashboard.html';
+        } else {
+            const errorText = await response.text();
+            console.error("Error al iniciar sesión:", errorText);
+            alert("Error de inicio de sesión");
         }
-        throw new Error('Error de inicio de sesión');
-    })
-    .then(data => {
-        localStorage.setItem('token', data.token); // Si tu API devuelve un token
-        window.location.href = 'index.html'; // Redirigir a la página de gestión de campañas
-    })
-    .catch(error => console.error('Error:', error));
-});
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+        alert("Hubo un error en el servidor. Inténtalo nuevamente.");
+    }
+}
+
+// Agrega el event listener al formulario para llamar a handleLogin al hacer submit
+document.getElementById("login-form").addEventListener("submit", handleLogin);

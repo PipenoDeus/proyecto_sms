@@ -1,0 +1,32 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Bienvenido al Dashboard</h1>
+    <p>Aquí puedes ver las opciones y estadísticas de tu cuenta.</p>
+    <!-- Agrega más contenido del dashboard aquí -->
+    <button onclick="logout()">Cerrar Sesión</button>
+
+    <script>
+        // Verifica si el usuario está autenticado al cargar la página
+        if (!localStorage.getItem('authToken')) {
+            alert("Por favor, inicia sesión primero.");
+            location.href = 'login.html';
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            // Elimina el token de autenticación
+            localStorage.removeItem('authToken');
+            // Redirige al usuario de regreso a la página de inicio de sesión
+            location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

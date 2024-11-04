@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2'); 
 const bcrypt = require('bcrypt');
@@ -7,8 +6,12 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 
+
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
+
+require('dotenv').config();
 
 const accountSid = 'AC44561615b6c3edb73c5f7d4aeaaa9588'; // Tu Account SID
 const authToken = '71bd67a6669307522d5857aeb2249aef'; // Tu Auth Token
@@ -25,8 +28,68 @@ const transporter = nodemailer.createTransport({
 });
 
 
+// Configurar la conexión a MySQL
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root', 
+  password: '', 
+  database: 'proyecto_sms' 
+});
+
+// Ruta para registrar un nuevo usuario
+app.post('/register', async (req, res) => {
+  const { username, password, correo } = req.body;
+
+  try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      db.query(
+          'INSERT INTO Usuario (username, password, correo) VALUES (?, ?, ?)',
+          [username, hashedPassword, correo],
+          (error, results) => {
+              if (error) {
+                  return res.status(500).json({ error: 'Error al registrar usuario' });
+              }
+              res.status(201).json({ message: 'Usuario registrado exitosamente' });
+          }
+      );
+  } catch (err) {
+      res.status(500).json({ error: 'Error al procesar la solicitud' });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  console.log('Datos recibidos:', { username, password }); // Agregado para depuración
+
+  db.query(
+      'SELECT * FROM Usuario WHERE username = ?',
+      [username],
+      async (error, results) => {
+          if (error) {
+              console.error('Error al buscar usuario:', error);
+              return res.status(500).json({ error: 'Error en la solicitud' });
+          }
+
+          if (results.length === 0) {
+              return res.status(400).json({ error: 'Usuario no encontrado' });
+          }
+
+          const user = results[0];
+          const match = await bcrypt.compare(password, user.password);
+
+          if (match) {
+              res.status(200).json({ message: 'Inicio de sesión exitoso' });
+          } else {
+              res.status(400).json({ error: 'Contraseña incorrecta' });
+          }
+      }
+  );
+});
+
+
 // Middleware
 app.use(cors());
+app.use(express.json()); // Ya lo tienes, pero asegúrate de no duplicarlo
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'front-end')));
 

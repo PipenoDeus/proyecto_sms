@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const accountSid = 'AC44561615b6c3edb73c5f7d4aeaaa9588'; // Tu Account SID
-const authToken = '71bd67a6669307522d5857aeb2249aef'; // Tu Auth Token
+const authToken = 'a8ae67c8d8a846148270bfd7e9e3f262'; // Tu Auth Token
 const twilioClient = twilio(accountSid, authToken); // Inicialización del cliente
 
 
@@ -123,10 +123,10 @@ app.put('/api/campanas/:id', (req, res) => {
     const mensaje = `La campaña con ID ${id} ha sido actualizada. Nuevos detalles: ${actualizadaCampana.mensaje}`;
     
     // Enviar SMS
-    enviarSMS(mensaje, '+56927325182'); 
+    enviarSMS(mensaje, '+56947725774'); 
 
     // Enviar correo
-    enviarCorreo(mensaje, 'luisfn.martinez@gmail.com'); 
+    enviarCorreo(mensaje, 'nicolascarmonarioseco@gmail.com'); 
 
     res.json({ message: 'Campaña actualizada' });
   });
@@ -140,7 +140,7 @@ app.listen(PORT, () => {
 // Ruta para probar el envío de SMS
 app.get('/api/prueba-sms', (req, res) => {
     const mensaje = "Este es un mensaje de prueba.";
-    const numeroDestino = '+56927325182'; // Reemplaza con el número al que deseas enviar el SMS
+    const numeroDestino = '+56947725774'; // Reemplaza con el número al que deseas enviar el SMS
   
     enviarSMS(mensaje, numeroDestino);
     
@@ -148,7 +148,7 @@ app.get('/api/prueba-sms', (req, res) => {
 });
 
 app.get('/api/enviar-correo', (req, res) => {
-    const destinatario = 'luisfn.martinez@gmail.com'; // Cambia esto por el email del destinatario
+    const destinatario = 'nicolascarmonarioseco@gmail.com'; // Cambia esto por el email del destinatario
     const asunto = 'Asunto del correo';
     const texto = 'Este es el contenido del correo.';
 
@@ -157,7 +157,7 @@ app.get('/api/enviar-correo', (req, res) => {
 });
 
 app.post('/api/enviar-correo', (req, res) => {
-    const destinatario = 'luisfn.martinez@gmail.com';
+    const destinatario = 'nicolascarmonarioseco@gmail.com';
     const asunto = 'Nueva campaña creada';
     const mensaje = 'Este es el contenido del mensaje.';
 
